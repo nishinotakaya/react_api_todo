@@ -8,7 +8,7 @@ const AddTodo = ({ setTodos }) => {
   };
 
   const handleSubmit = (event) => {
-    const data = { task:  task, isCompleted: false };
+    const data = { task: task, isCompleted: false };
     event.preventDefault();
     if (task === '') return;
     setTodos((todos) => [...todos, { task, isCompleted: false }]);
