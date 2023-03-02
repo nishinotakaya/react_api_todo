@@ -8,10 +8,25 @@ const AddTodo = ({ setTodos }) => {
   };
 
   const handleSubmit = (event) => {
+    const data = { task:  task, isCompleted: false };
     event.preventDefault();
     if (task === '') return;
     setTodos((todos) => [...todos, { task, isCompleted: false }]);
     setTask('');
+    fetch('/todos', {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   return (
