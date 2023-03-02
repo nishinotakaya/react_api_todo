@@ -13,8 +13,8 @@ const AddTodo = ({ setTodos }) => {
     if (task === '') return;
     setTodos((todos) => [...todos, { task, isCompleted: false }]);
     setTask('');
-    fetch('/todos', {
-    method: 'POST', // or 'PUT'
+    fetch('/todos', { // Todoリスト追加時にリクエストを送る処理
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
