@@ -16,7 +16,7 @@ const TodoList = ({ todos, setTodos }) => {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
-}
+  }
 
   const handleUpdateTask = (index) => {
     const newTodos = todos.map((todo, todoIndex) => {
