@@ -11,21 +11,24 @@ const AddTodo = ({ setTodos }) => {
     const data = { task: task, isCompleted: false };
     event.preventDefault();
     if (task === '') return;
+
       setTodos((todos) => [...todos, { task, isCompleted: false }]);
       setTask('');
-      fetch('/todos', { // Todoリスト追加時にリクエストを送る処理
+      fetch('http://localhost:4567/todos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        setTodos((todos) => [...todos, data]);
+        setTask('');
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
     });
   };
 
