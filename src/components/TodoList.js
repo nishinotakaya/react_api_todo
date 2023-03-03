@@ -12,10 +12,10 @@ const TodoList = ({ todos, setTodos }) => {
     console.error('Error:', error);
   });
   }, );
-	function handleRemoveTask(index) {
-		const newTodos = [...todos];
-		newTodos.splice(index, 1);
-		setTodos(newTodos);
+  function handleRemoveTask(index) {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
 	}
 
   const handleUpdateTask = (index) => {
