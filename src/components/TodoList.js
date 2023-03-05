@@ -1,21 +1,35 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-const TodoList = ({ todos, setTodos }) => {
+const TodoList = () => {
+  const [todos, setTodos] = useState([]);
+  console.log(todos);
   useEffect(() => {
     fetch('http://localhost:4567/todos')
-    .then((response) => response.json())
-    .then((data) => {
-    setTodos(data);
-  })
-    .catch((error) => {
-    console.error('Error:', error);
-  });
-  }, );
+      .then((response) => response.json())
+      .then((data) => {
+        setTodos(data);
+
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, []);
   function handleRemoveTask(index) {
+    const id = todos[index].id;
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
+    
+    fetch(`http://localhost:4567/todos/${id}`, {
+      method: 'DELETE'
+    })
+      .then(() => {
+        console.log('Task deleted successfully');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   const handleUpdateTask = (index) => {

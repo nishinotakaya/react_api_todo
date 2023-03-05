@@ -5,25 +5,17 @@ import TodoList from './TodoList';
 const Todo = () => {
   const initialState = [
     {
-      task: 'Learn vue.js',
+      task: 'test',
       isCompleted: false,
-    },
-    {
-      task: 'Learn React Hook',
-      isCompleted: false,
-    },
-    {
-      task: 'Learn Gatsby.js',
-      isCompleted: false,
-    },
+    }
   ];
-
+  
   const [todos, setTodos] = useState(initialState);
-
+  console.log(todos);
   return (
     <div>
       <h1>ToDo List</h1>
-      <AddTodo setTodos={setTodos} />
+      <AddTodo todos={todos} setTodos={setTodos} />
       <TodoList todos={todos} setTodos={setTodos} />
     </div>
   );
