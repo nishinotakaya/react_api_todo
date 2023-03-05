@@ -8,30 +8,34 @@ const AddTodo = ({ setTodos }) => {
   };
 
   const handleSubmit = (event) => {
-    const data = { task: task, isCompleted: false };
     event.preventDefault();
     if (task === '') return;
 
-      setTodos((todos) => [...todos, { task, isCompleted: false }]);
-      setTask('');
-      fetch('http://localhost:4567/todos', {
+    const data = { task, isCompleted: false };
+
+    fetch('http://localhost:4567/todos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        setTodos((todos) => [...todos, data]);
-        setTask('');
-        console.log('Success:', data);
+    })
+      .then(() => {
+        fetch('http://localhost:4567/todos')
+          .then((response) => response.json())
+          .then((data) => {
+            setTodos(data);
+            setTask('');
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
       })
       .catch((error) => {
         console.error('Error:', error);
-    });
+      });
   };
-
   return (
     <form onSubmit={handleSubmit}>
       Add Task :
