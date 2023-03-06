@@ -56,7 +56,7 @@ const TodoList = () => {
             checked={todo.isCompleted}
             onChange={() => handleUpdateTask(index)}
           />
-          {todo.task}
+          {todo.title}
           <span
             onClick={() => handleRemoveTask(index)}
             style={{ cursor: 'pointer' }}
