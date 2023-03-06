@@ -66,12 +66,12 @@ const TodoList = () => {
         <li
           key={index}
           style={{
-            textDecoration: todo.isCompleted ? 'line-through' : 'none',
+            textDecoration: todo.completed ? 'line-through' : 'none',
           }}
         >
           <input
             type="checkbox"
-            checked={todo.isCompleted}
+            checked={todo.completed}
             onChange={() => handleUpdateTask(index)}
           />
           {todo.title}
