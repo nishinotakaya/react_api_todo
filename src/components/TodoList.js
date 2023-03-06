@@ -30,36 +30,41 @@ const TodoList = () => {
       .catch((error) => {
         console.error('Error:', error);
       });
-  }
-
-  const handleUpdateTask = (index) => {
+  }  
+  // 追加: チェックボックスが変更された時の処理
+  const handleUpdateTask = (index, event) => {
+    event.persist();
     const todo = todos[index];
     const id = todos[index].id;
-    const updatedTodo = {...todo, isCompleted: !todo.isCompleted};
+    const updatedTodo = { ...todo, completed: !todo.completed };
     const newTodos = [...todos];
     newTodos[index] = updatedTodo;
-    setTodos(newTodos);
+    console.log(todo)
+    console.log(updatedTodo)
+  
     // PUTリクエストを送信
     fetch(`http://localhost:4567/todos/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        isCompleted: updatedTodo.isCompleted
+        completed: updatedTodo.completed,
+        title: updatedTodo.title
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }  
+        // 更新が成功した場合にのみ React state を更新する
+        setTodos(newTodos);
       })
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-    })
-    .catch(error => {
-      console.error('There was a problem with the fetch operation:', error);
-    });
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
   };
   
-
   return (
     <ul>
       {todos.map((todo, index) => (
@@ -72,7 +77,7 @@ const TodoList = () => {
           <input
             type="checkbox"
             checked={todo.completed}
-            onChange={() => handleUpdateTask(index)}
+            onChange={(event) => handleUpdateTask(index, event)} // イベントを引数に追加
           />
           {todo.title}
           <span
