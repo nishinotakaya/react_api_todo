@@ -9,7 +9,6 @@ const TodoList = () => {
       .then((response) => response.json())
       .then((data) => {
         setTodos(data);
-
       })
       .catch((error) => {
         console.error('Error:', error);
