@@ -39,8 +39,6 @@ const TodoList = () => {
     const updatedTodo = { ...todo, completed: !todo.completed };
     const newTodos = [...todos];
     newTodos[index] = updatedTodo;
-    console.log(todo)
-    console.log(updatedTodo)
   
     // PUTリクエストを送信
     fetch(`http://localhost:4567/todos/${id}`, {
