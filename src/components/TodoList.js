@@ -9,6 +9,7 @@ const TodoList = () => {
       .then((response) => response.json())
       .then((data) => {
         setTodos(data);
+
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -32,14 +33,32 @@ const TodoList = () => {
   }
 
   const handleUpdateTask = (index) => {
-    const newTodos = todos.map((todo, todoIndex) => {
-      if (todoIndex === index) {
-        todo.isCompleted = !todo.isCompleted;
-      }
-      return todo;
-    });
+    const todo = todos[index];
+    const id = todos[index].id;
+    const updatedTodo = {...todo, isCompleted: !todo.isCompleted};
+    const newTodos = [...todos];
+    newTodos[index] = updatedTodo;
     setTodos(newTodos);
+    // PUTリクエストを送信
+    fetch(`http://localhost:4567/todos/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        isCompleted: updatedTodo.isCompleted
+      })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+    })
+    .catch(error => {
+      console.error('There was a problem with the fetch operation:', error);
+    });
   };
+  
 
   return (
     <ul>
